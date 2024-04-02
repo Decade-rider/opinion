@@ -76,10 +76,12 @@ class Model:
         if type(self.C) is not list:
             self.C = [self.C] * self.N
 
+        if type(self.alpha) is not list:
+            self.alpha = [self.alpha] * self.N
         nodes = []
         for i in range(self.N):
             node_neighbors = list(G[i])
-            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i])
+            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],mu=self.alpha[i])
             nodes.append(node)
 
         edges = [(u, v) for u, v in G.edges()]
