@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-02 11:43:15
+LastEditTime: 2024-04-02 19:34:19
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     # params,     
     # K_list = {1, 5, 10, 20}
-
+    K=5
 
     run_model(seed_sequence=seed, model_params=kwparams(N, C, beta, trial), filename=f'baseline-ABC-K_{K}-C_1-beta_1')
 

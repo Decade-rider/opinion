@@ -64,9 +64,13 @@ class Model:
 
         print('initializing network')
         # random initial opinions from [0, 1] uniformly
-        opinions = self.RNG.random(self.N)
+        # opinions = self.RNG.random(self.N)
+        # Generate initial opinions from a normal distribution
+        opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
         # generate G(N, p) random graph
-        G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
+        # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
+        # Generate a barabasi_albert scale-free network
+        G = nx.barabasi_albert_graph(self.N,5,seed=self.seed_sequence)
 
         # random confidence bounds for each agent if providing list
         if type(self.C) is not list:
