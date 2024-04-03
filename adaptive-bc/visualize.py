@@ -1,3 +1,13 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-02 10:25:06
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-03 17:05:28
+FilePath: \opinion\adaptive-bc\visualize.py
+Description: 
+
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import numpy as np
 import pickle
 import bz2
@@ -9,9 +19,9 @@ import networkx as nx
 if __name__ == '__main__':
 
     # load the model
-    file = 'baseline-ABC-K_1-C_1-beta_1'
+    file = 'baseline-ABC-K_5-C_1.0-beta_1'
 
-    loaded_model = bz2.BZ2File(f'data/{file}.pbz2', 'rb')
+    loaded_model = bz2.BZ2File(f'{file}.pbz2', 'rb')
     loaded_model = pickle.load(loaded_model)
 
     loaded_model.info()

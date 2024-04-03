@@ -9,6 +9,9 @@ import bz2
 
 class Model:
     def __init__(self, seed_sequence, **kwparams) -> None:
+        # # Print the length and first few elements of C to debug
+        # print(f'Length of C: {len(kwparams["C"])}')
+        # print(f'First few elements of C: {kwparams["C"][:5]}')
         # set random state for model instance to ensure repeatability
         self.seed_sequence = seed_sequence
         try:
@@ -70,18 +73,23 @@ class Model:
         # generate G(N, p) random graph
         # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
         # Generate a barabasi_albert scale-free network
-        G = nx.barabasi_albert_graph(self.N,5,seed=self.seed_sequence)
+        G = nx.barabasi_albert_graph(self.N,2,seed=self.seed_sequence)
 
         # random confidence bounds for each agent if providing list
-        if type(self.C) is not list:
-            self.C = [self.C] * self.N
+        # if type(self.C) is not list:
+        #     self.C = [self.C] * self.N
+        
+        # Print the length and first few elements of self.C to ensure it's correctly set
+        print(f'Length of self.C after processing: {len(self.C)}')
+        print(f'First few elements of self.C: {self.C[:5]}')
 
-        if type(self.alpha) is not list:
-            self.alpha = [self.alpha] * self.N
+        # if type(self.alpha) is not list:
+        #     self.alpha = [self.alpha] * self.N
+
         nodes = []
         for i in range(self.N):
             node_neighbors = list(G[i])
-            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],mu=self.alpha[i])
+            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i])
             nodes.append(node)
 
         edges = [(u, v) for u, v in G.edges()]
@@ -148,14 +156,18 @@ class Model:
             # for each pair, update opinions in Model and Node
             X_new = self.X.copy()
             for u, w in node_pairs:
+                # Check the value of self.C[u]
+                print(f"Value of self.C[{u}]: {self.C[u]}")
+                print(f"Value of self.C[{w}]: {self.C[w]}")
+                
                 # assumptions here
                 # using confidence bound of the receiving agent
-                if abs(self.X[u] - self.X[w] <= self.C[u]):
+                if abs(self.X[u] - self.X[w]) <= self.C[u]:
                     X_new[u] = self.X[u] + self.alpha * (self.X[w] - self.X[u])
                     self.nodes[u].update_opinion(X_new[u])
 
                 # check other agent is withing their own bounds
-                if abs(self.X[w] - self.X[u] <= self.C[w]):
+                if abs(self.X[w] - self.X[u]) <= self.C[w]:
                     X_new[w] = self.X[w] + self.alpha * (self.X[u] - self.X[w])
                     self.nodes[w].update_opinion(X_new[w])
 

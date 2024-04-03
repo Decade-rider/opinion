@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-02 19:34:19
+LastEditTime: 2024-04-03 17:27:34
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -18,7 +18,7 @@ from numpy.random import SeedSequence
 def kwparams(N, C, beta, trial, K):
     params = {
         "trial" : trial,
-        "max_steps" : 1000000,
+        "max_steps" : 10,
         "N" : N,
         "p" : 0.1,
         "tolerance" : 1e-5,
@@ -34,7 +34,7 @@ def kwparams(N, C, beta, trial, K):
 def run_model(seed_sequence, model_params, filename=None):
     model = Model(seed_sequence, **model_params)
     model.run(test=True)
-    model.save_model(f'data/{filename}.pbz2')
+    model.save_model(f'{filename}.pbz2')
 
     if model.beta != 1:
         print(f'Network assortativity: {model.start_assortativity}')
@@ -43,12 +43,12 @@ def run_model(seed_sequence, model_params, filename=None):
 if __name__ == '__main__':
     seed = 123456789
 
-    N = 1000
+    N = 10
     RNG = np.random.default_rng(seed=seed)
 
-    # confidence_intervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-    # C = RNG.choice(confidence_intervals, N)
-    C = 1
+    confidence_intervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+    C = RNG.choice(confidence_intervals, N)
+    # C = 1
 
     # beta = 0.25
     beta = 1
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # K_list = {1, 5, 10, 20}
     K=5
 
-    run_model(seed_sequence=seed, model_params=kwparams(N, C, beta, trial), filename=f'baseline-ABC-K_{K}-C_1-beta_1')
+    run_model(seed_sequence=seed, model_params=kwparams(N, C, beta, trial,K), filename=f'baseline-ABC-K_5-C_{C[0]}-beta_1')
 
     # print('Running model...')
     # processes = []
