@@ -153,9 +153,9 @@ class Model:
             # for each pair, update opinions in Model and Node
             X_new = self.X.copy()
             for u, w in node_pairs:
-                # Check the value of self.C[u]
-                print(f"Value of self.C[{u}]: {self.C[u]}")
-                print(f"Value of self.C[{w}]: {self.C[w]}")
+                # # Check the value of self.C[u]
+                # print(f"Value of self.C[{u}]: {self.C[u]}")
+                # print(f"Value of self.C[{w}]: {self.C[w]}")
                 
                 # assumptions here
                 # using confidence bound of the receiving agent
