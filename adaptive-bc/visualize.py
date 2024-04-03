@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-03 17:05:28
+LastEditTime: 2024-04-03 18:19:28
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -19,7 +19,7 @@ import networkx as nx
 if __name__ == '__main__':
 
     # load the model
-    file = 'baseline-ABC-K_5-C_1.0-beta_1'
+    file = 'baseline-ABC-K_5-C_1-beta_1'
 
     loaded_model = bz2.BZ2File(f'{file}.pbz2', 'rb')
     loaded_model = pickle.load(loaded_model)

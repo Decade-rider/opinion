@@ -1,8 +1,19 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-02 10:25:06
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-03 17:49:40
+FilePath: \opinion\adaptive-bc\node.py
+Description: 
+
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import numpy as np
 
 class Node:
-    def __init__(self, id: int, initial_opinion: float, neighbors: list = None, confidence_bound: float = None) -> None:
+    def __init__(self, id: int, initial_opinion: float,alpha: float = None, neighbors: list = None, confidence_bound: float = None) -> None:
         self.id = id
+        self.alpha = alpha
         self.initial_opinion = initial_opinion
         self.neighbors = neighbors if neighbors is not None else []
         self.confidence_bound = confidence_bound
@@ -46,6 +57,7 @@ class Node:
 
     def info(self) -> None:
         print(f'id: {self.id}')
+        print(f'alpha: {self.alpha}')
         print(f'init opinion: {self.initial_opinion}')
         print(f'current opinion {self.current_opinion}')
         print(f'neighbors {self.neighbors}')

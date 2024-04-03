@@ -31,7 +31,8 @@ class Model:
         self.N = kwparams['N']                              # number of nodes
         self.p = kwparams['p']                              # p in G(N, p), probability of edge creation
         self.tolerance = kwparams['tolerance']              # convergence tolerance
-        self.alpha = kwparams['alpha']                      # convergence parameter
+        # self.alpha = kwparams['alpha']                      # convergence parameter 每个个体的收敛参数，这里每个个体的收敛参数都是相同的，所以这里直接用一个值即可
+        self.alphas = kwparams.get('alphas', [0.1] * self.N) # New: Initialize alphas list for individual node's alpha values
         self.C = kwparams['C']                              # confidence bound
         self.beta = kwparams['beta']                        # rewiring threshold
         self.M = kwparams['M']                              # num of edges to rewire each step
@@ -86,7 +87,7 @@ class Model:
         nodes = []
         for i in range(self.N):
             node_neighbors = list(G[i])
-            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i])
+            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
             nodes.append(node)
 
         edges = [(u, v) for u, v in G.edges()]
@@ -160,12 +161,12 @@ class Model:
                 # assumptions here
                 # using confidence bound of the receiving agent
                 if abs(self.X[u] - self.X[w]) <= self.C[u]:
-                    X_new[u] = self.X[u] + self.alpha * (self.X[w] - self.X[u])
+                    X_new[u] = self.X[u] + self.nodes[u].alpha * (self.X[w] - self.X[u])
                     self.nodes[u].update_opinion(X_new[u])
 
                 # check other agent is withing their own bounds
                 if abs(self.X[w] - self.X[u]) <= self.C[w]:
-                    X_new[w] = self.X[w] + self.alpha * (self.X[u] - self.X[w])
+                    X_new[w] = self.X[w] + self.nodes[w].alpha * (self.X[u] - self.X[w])
                     self.nodes[w].update_opinion(X_new[w])
 
             # update data
@@ -255,7 +256,7 @@ class Model:
         print(f'Number of nodes: {self.N}')
         print(f'Edge creation probability: {self.p}')
         print(f'Convergence tolerance: {self.tolerance}')
-        print(f'Convergence parameter: {self.alpha}')
+        print(f'Convergence parameter: {self.alphas}')
         # print(f'Confidence bounds: {self.C}')
         print(f'Rewiring threshold: {self.beta}')
         print(f'Edges to rewire at each time step, M: {self.M}')
