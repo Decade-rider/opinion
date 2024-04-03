@@ -83,9 +83,6 @@ class Model:
         print(f'Length of self.C after processing: {len(self.C)}')
         print(f'First few elements of self.C: {self.C[:5]}')
 
-        # if type(self.alpha) is not list:
-        #     self.alpha = [self.alpha] * self.N
-
         nodes = []
         for i in range(self.N):
             node_neighbors = list(G[i])
