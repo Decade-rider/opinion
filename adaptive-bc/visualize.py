@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-03 18:19:28
+LastEditTime: 2024-04-03 21:17:08
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # load the model
     file = 'baseline-ABC-K_5-C_1-beta_1'
 
-    loaded_model = bz2.BZ2File(f'{file}.pbz2', 'rb')
+    loaded_model = bz2.BZ2File(f'adaptive-bc/data/{file}.pbz2', 'rb')
     loaded_model = pickle.load(loaded_model)
 
     loaded_model.info()
@@ -50,3 +50,4 @@ if __name__ == '__main__':
     # plt.annotate(f'$confidence$ $\epsilon = {loaded_model.C}$', xy=(1.05,.8), xycoords='axes fraction', fontsize=12)
     plt.title(f'Opinion Evolution: Adaptive-BC')
     plt.show()
+    plt.savefig(f'adaptive-bc/data/{file}.png')

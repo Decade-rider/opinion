@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-03 18:18:21
+LastEditTime: 2024-04-03 21:16:09
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -35,7 +35,7 @@ def kwparams(N, C, beta, trial, K,alphas):
 def run_model(seed_sequence, model_params, filename=None):
     model = Model(seed_sequence, **model_params)
     model.run(test=True)
-    model.save_model(f'{filename}.pbz2')
+    model.save_model(f'adaptive-bc/data/{filename}.pbz2')
 
     if model.beta != 1:
         print(f'Network assortativity: {model.start_assortativity}')
