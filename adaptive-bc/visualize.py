@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-03 21:17:08
+LastEditTime: 2024-04-03 21:25:38
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -49,5 +49,6 @@ if __name__ == '__main__':
     # plt.legend(['Nodes in Network'], bbox_to_anchor=(1.3, 1), loc='upper right')
     # plt.annotate(f'$confidence$ $\epsilon = {loaded_model.C}$', xy=(1.05,.8), xycoords='axes fraction', fontsize=12)
     plt.title(f'Opinion Evolution: Adaptive-BC')
+    plt.savefig(f'adaptive-bc/data/{file}.eps')
     plt.show()
-    plt.savefig(f'adaptive-bc/data/{file}.png')
+    
