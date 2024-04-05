@@ -1,6 +1,7 @@
 import networkx as nx
 from node import Node
 import numpy as np
+from collections import Counter
 # from numpy.random import RandomState, MT19937
 import random
 
@@ -93,6 +94,14 @@ class Model:
             node_neighbors = list(G[i])
             node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
             nodes.append(node)
+            
+        edges = [(u, v) for u, v in G.edges()]
+
+        self.X = opinions
+        self.initial_X = opinions
+        self.edges = edges.copy()
+        self.initial_edges = edges.copy()
+        self.nodes = nodes
 
     def opinion_to_emotion(self, opinion):
         # 情绪分类逻辑
@@ -184,7 +193,7 @@ class Model:
                 self.X_data[t_prime + 1] = X_new
         
             # 计算当前的情绪分布
-            current_emotions = [self.opinion_to_emotion(node.opinion) for node in self.nodes]
+            current_emotions = [self.opinion_to_emotion(node.current_opinion) for node in self.nodes]
             self.emotion_history.append(Counter(current_emotions))
 
         def check_convergence():

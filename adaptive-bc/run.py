@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-05 18:05:26
+LastEditTime: 2024-04-05 19:36:37
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -13,6 +13,7 @@ from model import Model
 from node import Node
 import numpy as np
 from numpy.random import SeedSequence
+
 
 # record data for baseline results
 def kwparams(N, C, beta, trial, K,alphas):
@@ -37,6 +38,7 @@ def run_model(seed_sequence, model_params, filename=None):
     model.run(test=True)
     # 获取情绪历史记录
     emotion_history = model.emotion_history
+    
     model.save_model(f'adaptive-bc/data/emotion/{filename}.pbz2')
 
     if model.beta != 1:
@@ -46,7 +48,7 @@ def run_model(seed_sequence, model_params, filename=None):
 if __name__ == '__main__':
     seed = 123456789
 
-    N = 1000
+    N = 100
     RNG = np.random.default_rng(seed=seed)
 
     confidence_intervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]

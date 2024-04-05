@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-05 18:20:07
+LastEditTime: 2024-04-05 19:23:28
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -11,6 +11,12 @@ Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved.
 import pickle
 import bz2
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+from collections import Counter
+
+# 设置中文显示
+rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体
+rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
 def load_model(filename):
     with bz2.BZ2File(filename, 'rb') as file:
@@ -23,18 +29,32 @@ def plot_opinion_evolution(model, filename):
     plt.xlabel('Time')
     plt.ylabel('Opinion')
     plt.title('Opinion Evolution: Adaptive-BC')
-    plt.savefig(f'adaptive-bc/data/{filename}.eps')
+    plt.savefig(f'adaptive-bc/data/emotion/{filename}.eps')
     plt.close()
 
 def plot_emotion_evolution(model, filename):
-    for step, emotions in enumerate(model.emotion_history):
-        plt.figure()
-        plt.bar(emotions.keys(), emotions.values())
-        plt.xlabel('情绪类别')
-        plt.ylabel('数量')
-        plt.title(f'情绪分布 - 时间步 {step}')
-        plt.savefig(f'adaptive-bc/data/emotion/{filename}_step_{step}.png')
-        plt.close()
+    # 准备数据
+    negative_emotions = []
+    neutral_emotions = []
+    positive_emotions = []
+
+    for emotions in model.emotion_history:
+        emotion_count = Counter(emotions)
+        negative_emotions.append(emotion_count['负面情绪'])
+        neutral_emotions.append(emotion_count['中性情绪'])
+        positive_emotions.append(emotion_count['正面情绪'])
+
+    # 绘制情绪随时间变化的折线图
+    plt.figure(figsize=(12, 8))
+    plt.plot(negative_emotions, label='负面情绪')
+    plt.plot(neutral_emotions, label='中性情绪')
+    plt.plot(positive_emotions, label='正面情绪')
+    plt.title('情绪随时间的变化')
+    plt.xlabel('时间步')
+    plt.ylabel('数量')
+    plt.legend()
+    plt.savefig(f'adaptive-bc/data/emotion/{filename}_emotion_evolution.png')
+    plt.close()
 
 if __name__ == '__main__':
     file = 'baseline-ABC-K_5-C_-alpha_-beta_1-trial_1-emotion'
@@ -54,5 +74,6 @@ if __name__ == '__main__':
 
     plot_opinion_evolution(model, file)
     plot_emotion_evolution(model, file)
+
 
     
