@@ -93,6 +93,14 @@ class Model:
             node_neighbors = list(G[i])
             node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
             nodes.append(node)
+            
+        edges = [(u, v) for u, v in G.edges()]
+
+        self.X = opinions
+        self.initial_X = opinions
+        self.edges = edges.copy()
+        self.initial_edges = edges.copy()
+        self.nodes = nodes
 
     def opinion_to_emotion(self, opinion):
         # 情绪分类逻辑
