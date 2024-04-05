@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-05 19:36:37
+LastEditTime: 2024-04-05 20:10:58
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -19,7 +19,7 @@ from numpy.random import SeedSequence
 def kwparams(N, C, beta, trial, K,alphas):
     params = {
         "trial" : trial,
-        "max_steps" : 1000000,
+        "max_steps" : 10000000,
         "N" : N,
         "p" : 0.1,
         "tolerance" : 1e-5,
