@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-03 21:16:09
+LastEditTime: 2024-04-05 18:05:26
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 
@@ -35,7 +35,9 @@ def kwparams(N, C, beta, trial, K,alphas):
 def run_model(seed_sequence, model_params, filename=None):
     model = Model(seed_sequence, **model_params)
     model.run(test=True)
-    model.save_model(f'adaptive-bc/data/{filename}.pbz2')
+    # 获取情绪历史记录
+    emotion_history = model.emotion_history
+    model.save_model(f'adaptive-bc/data/emotion/{filename}.pbz2')
 
     if model.beta != 1:
         print(f'Network assortativity: {model.start_assortativity}')
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     K=5
 
     model_params=kwparams(N, C, beta, trial,K,alphas=alphas)
-    run_model(seed_sequence=seed, model_params=model_params, filename=f'baseline-ABC-K_5-C_1-beta_1')
+    run_model(seed_sequence=seed, model_params=model_params, filename=f'baseline-ABC-K_5-C_-alpha_-beta_1-trial_1-emotion')
 
     # print('Running model...')
     # processes = []

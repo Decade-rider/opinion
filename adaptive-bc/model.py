@@ -38,6 +38,8 @@ class Model:
         self.M = kwparams['M']                              # num of edges to rewire each step
         self.K = kwparams['K']                              # num of node pairs to update opinions at each step
         self.full_time_series = kwparams['full_time_series']       # save time series opinion data
+        self.emotion_history = []  # 用于存储每个时间步骤的情绪分布
+
 
         # generate network and set attributes:
         # opinions, initial_opinions, initial_edges, nodes, edges
@@ -70,19 +72,21 @@ class Model:
         # random initial opinions from [0, 1] uniformly
         # opinions = self.RNG.random(self.N)
         # Generate initial opinions from a normal distribution
-        opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
+        # opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
+        # 0<=opinions<1/3,为负面情绪。1/3<=opinions<2/3,为中性情绪。2/3<=opinions<=1,为正面情绪
+        opinions = np.random.uniform(0,1,self.N)        
         # generate G(N, p) random graph
         # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
         # Generate a barabasi_albert scale-free network
         G = nx.barabasi_albert_graph(self.N,2,seed=self.seed_sequence)
 
-        # random confidence bounds for each agent if providing list
+        # random confidence bounds for each agent if providing list # 这部分可以不要
         # if type(self.C) is not list:
         #     self.C = [self.C] * self.N
         
         # Print the length and first few elements of self.C to ensure it's correctly set
-        print(f'Length of self.C after processing: {len(self.C)}')
-        print(f'First few elements of self.C: {self.C[:5]}')
+        # print(f'Length of self.C after processing: {len(self.C)}')
+        # print(f'First few elements of self.C: {self.C[:5]}')
 
         nodes = []
         for i in range(self.N):
@@ -90,14 +94,14 @@ class Model:
             node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
             nodes.append(node)
 
-        edges = [(u, v) for u, v in G.edges()]
-
-        self.X = opinions
-        self.initial_X = opinions
-        self.edges = edges.copy()
-        self.initial_edges = edges.copy()
-        self.nodes = nodes
-
+    def opinion_to_emotion(self, opinion):
+        # 情绪分类逻辑
+        if 0 <= opinion < 1/3:
+            return '负面情绪'
+        elif 1/3 <= opinion < 2/3:
+            return '中性情绪'
+        else:
+            return '正面情绪'
     # run the model
     def run(self, test=False) -> None:
         time = 0
@@ -178,6 +182,10 @@ class Model:
             elif (time % 250 == 0):
                 t_prime = int(time / 250)
                 self.X_data[t_prime + 1] = X_new
+        
+            # 计算当前的情绪分布
+            current_emotions = [self.opinion_to_emotion(node.opinion) for node in self.nodes]
+            self.emotion_history.append(Counter(current_emotions))
 
         def check_convergence():
             state_change = np.sum(np.abs(self.X - self.X_prev))
@@ -256,7 +264,7 @@ class Model:
         print(f'Number of nodes: {self.N}')
         print(f'Edge creation probability: {self.p}')
         print(f'Convergence tolerance: {self.tolerance}')
-        print(f'Convergence parameter: {self.alphas}')
+        # print(f'Convergence parameter: {self.alphas}')
         # print(f'Confidence bounds: {self.C}')
         print(f'Rewiring threshold: {self.beta}')
         print(f'Edges to rewire at each time step, M: {self.M}')
