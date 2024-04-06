@@ -41,4 +41,4 @@ if __name__ == '__main__':
     beta = 1
     K = 5
 
-    multiple_experiments(num_experiments, N, C, beta, K, alphas_list)
+    multiple_experiments(num_experiments, N, C, beta, K, alphas_list) # 调用函数运行实验
