@@ -20,7 +20,7 @@ def kwparams(N, C, beta, trial, K, alphas):
 def run_single_experiment(seed_sequence, model_params, filename):
     model = Model(seed_sequence, **model_params)
     model.run(test=False)
-    model.save_model(f'adaptive-bc/data/emotion/{filename}.pbz2')
+    model.save_model(f'adaptive-bc/data/emotion/300/{filename}.pbz2')
 
 def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
     for trial in range(1, num_experiments + 1):
