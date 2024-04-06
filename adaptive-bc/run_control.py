@@ -2,7 +2,6 @@ import multiprocessing
 from model import Model
 import numpy as np
 from numpy.random import SeedSequence
-
 def kwparams(N, C, beta, trial, K, alphas):
     return {
         "trial": trial,
@@ -35,7 +34,7 @@ def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
 
 if __name__ == '__main__':
     num_experiments = 10  # 设置要运行的实验次数
-    N = 1000
+    N = 100
     confidence_intervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
     C = np.random.choice(confidence_intervals, N)
     alphas_list = [0.1, 0.2, 0.3, 0.4, 0.5]
