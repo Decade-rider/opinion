@@ -33,6 +33,12 @@ def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
         print(f'Experiment {trial} completed.')
 
 if __name__ == '__main__':
+    
+    '''
+    设置实验所需的参数。
+    如果新建一个文件，可以将这部分代码复制到新文件中，并修改参数。而不用复制if __name__ == '__main__'，
+    不过记得使用from run_control import multiple_experiments 从而使用该方法来进行多次实验。
+    '''
     num_experiments = 10  # 设置要运行的实验次数
     N = 100
     confidence_intervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]

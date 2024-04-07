@@ -29,7 +29,7 @@ def plot_opinion_evolution(model, filename):
     plt.xlabel('Time')
     plt.ylabel('Opinion')
     plt.title('Opinion Evolution: Adaptive-BC')
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}.png')
+    plt.savefig(f'adaptive-bc/data/emotion/300/{filename}.png')
     plt.close()
 
 def plot_emotion_evolution(model, filename):
@@ -53,7 +53,7 @@ def plot_emotion_evolution(model, filename):
     plt.xlabel('时间步')
     plt.ylabel('数量')
     plt.legend()
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}_emotion_evolution.png')
+    plt.savefig(f'adaptive-bc/data/emotion/300/{filename}_emotion_evolution.png')
     plt.close()
 
 if __name__ == '__main__':
