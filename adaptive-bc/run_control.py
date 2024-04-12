@@ -19,18 +19,23 @@ def kwparams(N, C, beta, trial, K, alphas):
 
 def run_single_experiment(seed_sequence, model_params, filename):
     model = Model(seed_sequence, **model_params)
-    model.run(test=False)
-    model.save_model(f'adaptive-bc/data/emotion/300/{filename}.pbz2')
+    model.run(test=False)  # 运行模型
+    model.save_model(filename=f'adaptive-bc/data/emotion/{filename}.pbz2')
+
+
+
 
 def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
     for trial in range(1, num_experiments + 1):
-        seed = np.random.randint(0, 1000000) # 生成随机种子, 用于生成随机数,保证实验的随机性。如果要复现实验结果，可以将seed设置为固定值，如seed=123456789
+        # seed = np.random.randint(0, 1000000) # 生成随机种子, 用于生成随机数,保证实验的随机性。如果要复现实验结果，可以将seed设置为固定值，如seed=123456789
+        seed = 123456789
         RNG = np.random.default_rng(seed=seed)
         alphas = RNG.choice(alphas_list, N)
         model_params = kwparams(N, C, beta, trial, K, alphas)
         filename = f'baseline-ABC-K_{K}-C_1-beta_{beta}-trial_{trial}'
         run_single_experiment(seed_sequence=seed, model_params=model_params, filename=filename)
         print(f'Experiment {trial} completed.')
+
 
 if __name__ == '__main__':
     

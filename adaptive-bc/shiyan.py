@@ -1,11 +1,21 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-05 22:50:16
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-12 19:57:28
+FilePath: \opinion\adaptive-bc\shiyan.py
+Description: 
+
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 # 假设 run.py 和 visualize.py 在同一目录中
 import numpy as np
 from run_control import multiple_experiments 
-from visualize import load_model,plot_opinion_evolution,plot_emotion_evolution
+from visualize import load_model,plot_opinion_evolution,plot_emotion_evolution,plot_emotion_extreme_evolution,plot_emotion_extreme_total_evolution
 
 # 设置实验参数
-num_experiments = 10
-N = 500
+num_experiments = 2  # 设置要运行的实验次数
+N = 100
 C = np.random.choice([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], N)
 alphas_list = [0.1, 0.2, 0.3, 0.4, 0.5]
 beta = 1
@@ -24,3 +34,10 @@ for trial in range(1, num_experiments + 1):
     
     # 绘制每次实验的情绪演变
     plot_emotion_evolution(model, f'emotion_evolution_trial_{trial}')
+    
+    # 绘制每次实验的两种极端情绪演变
+    plot_emotion_extreme_evolution(model, f'emotion_extreme_evolution_trial_{trial}')
+    
+    # 绘制每次实验的极端情绪演变
+    plot_emotion_extreme_total_evolution(model, f'emotion_extreme_total_evolution_trial_{trial}')
+    

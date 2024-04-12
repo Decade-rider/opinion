@@ -1,3 +1,13 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-02 10:25:06
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-12 20:22:15
+FilePath: \opinion\adaptive-bc\model.py
+Description: 
+
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import networkx as nx
 from node import Node
 import numpy as np
@@ -40,6 +50,7 @@ class Model:
         self.K = kwparams['K']                              # num of node pairs to update opinions at each step
         self.full_time_series = kwparams['full_time_series']       # save time series opinion data
         self.emotion_history = []  # 用于存储每个时间步骤的情绪分布
+        self.extreme_emotion_history = []  # 用于存储每个时间步骤的极端情绪分布
 
 
         # generate network and set attributes:
@@ -119,11 +130,11 @@ class Model:
             return '极端负面情绪'
         elif 0.9 <= opinion <= 1:
             return '极端正面情绪'
+        return '非极端情绪'
 
     # run the model
     def run(self, test=False) -> None:
         time = 0
-
         def rewire():
             # get discordant edges
             discordant_edges = [(i, j) for i, j in self.edges if abs(self.X[i] - self.X[j]) > self.beta]
@@ -201,9 +212,13 @@ class Model:
                 t_prime = int(time / 250)
                 self.X_data[t_prime + 1] = X_new
         
-            # 计算当前的情绪分布
+            # 计算当前的情绪分布和极端情绪分布
             current_emotions = [self.opinion_to_emotion(node.current_opinion) for node in self.nodes]
+            current_extreme_emotions = [self.opinion_to_emotion_extreme(node.current_opinion) for node in self.nodes]
+            # 记录当前的情绪分布和极端情绪分布
             self.emotion_history.append(Counter(current_emotions))
+            self.extreme_emotion_history.append(Counter(current_extreme_emotions))
+
 
         def check_convergence():
             state_change = np.sum(np.abs(self.X - self.X_prev))
@@ -266,15 +281,15 @@ class Model:
         self.num_discordant_edges = self.num_discordant_edges[:self.convergence_time - 1]
         self.num_discordant_edges = np.trim_zeros(self.num_discordant_edges)
 
-        # if not filename:
-        #     # C = f'{self.C:.2f}'.replace('.','')
-        #     # beta_str = f'{self.beta:.2f}'.replace('.','')
-        #     beta_str = str(self.beta)
-        #     filename = f'adaptive-bc-beta_{beta_str}_trial_{self.trial}_spk_{self.spawn_key}.pbz2'
+        if not filename:
+            # C = f'{self.C:.2f}'.replace('.','')
+            # beta_str = f'{self.beta:.2f}'.replace('.','')
+            beta_str = str(self.beta)
+            filename = f'adaptive-bc/data/adaptive-bc-beta_{beta_str}_trial_{self.trial}_spk_{self.spawn_key}.pbz2'
 
         print(f'saving model to {filename}')
         with bz2.BZ2File(filename, 'w') as f:
-            pickle.dump(self, f)
+            pickle.dump(self, f)        
 
     def info(self):
         print(f'Seed sequeunce: {self.seed_sequence}')
