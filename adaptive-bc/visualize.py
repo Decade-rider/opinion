@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-12 20:58:16
+LastEditTime: 2024-04-12 21:29:52
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -87,7 +87,7 @@ def plot_emotion_extreme_total_evolution(model, filename):
     # 绘制极端情绪随时间变化的折线图
     plt.figure(figsize=(12, 8))
     plt.plot(emotions_extreme_total, label='极端情绪')
-    plt.title('情绪随时间的变化')
+    plt.title('极端情绪随时间的变化')
     plt.xlabel('时间步')
     plt.ylabel('数量')
     plt.legend()
