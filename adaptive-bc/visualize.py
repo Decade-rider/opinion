@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-05 19:23:28
+LastEditTime: 2024-04-12 19:36:07
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -55,6 +55,27 @@ def plot_emotion_evolution(model, filename):
     plt.legend()
     plt.savefig(f'adaptive-bc/data/emotion/300/{filename}_emotion_evolution.png')
     plt.close()
+
+def plot_emotion_extreme_evolution(model, filename):
+    # 准备数据
+    negative_emotions_extreme = []
+    positive_emotions_extreme = []
+    for emotions in model.emotion_history:
+        emotion_count = Counter(emotions)
+        negative_emotions_extreme.append(emotion_count['极端负面情绪'])
+        positive_emotions_extreme.append(emotion_count['极端正面情绪'])
+    
+    # 绘制极端情绪随时间变化的折线图
+    plt.figure(figsize=(12, 8))
+    plt.plot(negative_emotions_extreme, label='极端负面情绪')
+    plt.plot(positive_emotions_extreme, label='极端正面情绪')
+    plt.title('极端情绪随时间的变化')
+    plt.xlabel('时间步')
+    plt.ylabel('数量')
+    plt.legend()
+    plt.savefig(f'adaptive-bc/data/emotion/300/{filename}_emotion_extreme_evolution.png')
+    plt.close()
+        
 
 if __name__ == '__main__':
     file = 'baseline-ABC-K_5-C_-alpha_-beta_1-trial_1-emotion'

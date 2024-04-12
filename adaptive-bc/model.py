@@ -75,6 +75,7 @@ class Model:
         # Generate initial opinions from a normal distribution
         # opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
         # 0<=opinions<1/3,为负面情绪。1/3<=opinions<2/3,为中性情绪。2/3<=opinions<=1,为正面情绪
+        # 0<=opinions<0.1,为极端负面情绪。0.9<=opinions<=1,为极端正面情绪
         opinions = np.random.uniform(0,1,self.N)        
         # generate G(N, p) random graph
         # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
@@ -111,6 +112,14 @@ class Model:
             return '中性情绪'
         else:
             return '正面情绪'
+        
+    def opinion_to_emotion_extreme(self, opinion):
+        # 极端情绪分类逻辑
+        if 0 <= opinion <= 0.1:
+            return '极端负面情绪'
+        elif 0.9 <= opinion <= 1:
+            return '极端正面情绪'
+
     # run the model
     def run(self, test=False) -> None:
         time = 0
