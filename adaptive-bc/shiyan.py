@@ -2,10 +2,10 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-05 22:50:16
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-16 22:49:06
+LastEditTime: 2024-04-17 21:12:35
 FilePath: \opinion\adaptive-bc\shiyan.py
 Description: 
-
+    重复实验的总调用程序
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 # 假设 run.py 和 visualize.py 在同一目录中
