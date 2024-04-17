@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-18 00:06:01
+LastEditTime: 2024-04-18 00:33:43
 FilePath: \opinion\adaptive-bc\model.py
 Description: 
 
@@ -31,10 +31,14 @@ class Model:
             self.spawn_key = None
 
         # each instance gets its own RNG
-        self.RNG = np.random.default_rng(seed_sequence)
+        # self.RNG = np.random.default_rng(seed_sequence)
         # set state of random module
-        random.seed(seed_sequence)
+        # random.seed(seed_sequence)
         # self.random_state = seed_sequence # RandomState(MT19937(seed_sequence)) or random_state???
+        
+        self.seed_sequence = seed  # 存储种子
+        random.seed(seed)  # 使用整数种子
+        self.RNG = np.random.default_rng(seed=seed)  # 创建一个新的随机数生成器
         
         self.G = G  # 添加这行，接受外部网络
         self.opinions = opinions  # 添加这行，接受外部观点数据
