@@ -38,7 +38,7 @@ def kwparams(N, C, beta, trial, K, alphas):
 def run_single_experiment(seed_sequence, model_params, filename, G, opinions):
     model = Model(seed_sequence, G, opinions, **model_params)
     model.run(test=False)
-    model.save_model(filename=f'adaptive-bc/data/emotion/{filename}.pbz2')
+    model.save_model(filename=f'adaptive-bc/data/emotion/moxingduibi/{filename}.pbz2')
 
 def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
     G, opinions = load_network_and_opinions()
