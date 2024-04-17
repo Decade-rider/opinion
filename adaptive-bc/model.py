@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-18 00:33:43
+LastEditTime: 2024-04-18 00:36:13
 FilePath: \opinion\adaptive-bc\model.py
 Description: 
 
@@ -19,16 +19,16 @@ import pickle
 import bz2
 
 class Model:
-    def __init__(self,G,opinions,seed_sequence, **kwparams) -> None:
+    def __init__(self,G,opinions,seed, **kwparams) -> None:
         # # Print the length and first few elements of C to debug
         # print(f'Length of C: {len(kwparams["C"])}')
         # print(f'First few elements of C: {kwparams["C"][:5]}')
         # set random state for model instance to ensure repeatability
-        self.seed_sequence = seed_sequence
-        try:
-            self.spawn_key = seed_sequence.spawn_key[0]
-        except:
-            self.spawn_key = None
+        # self.seed_sequence = seed_sequence
+        # try:
+        #     self.spawn_key = seed_sequence.spawn_key[0]
+        # except:
+        #     self.spawn_key = None
 
         # each instance gets its own RNG
         # self.RNG = np.random.default_rng(seed_sequence)
