@@ -1,6 +1,7 @@
 import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt
+import pickle
 
 # 加载数据，假设 Excel 文件中现在包含列名
 df = pd.read_excel('adaptive-bc\gdtj_qdr.xlsx')
@@ -26,3 +27,7 @@ for idx, row in df.iterrows():
 # 可视化网络
 nx.draw(G, with_labels=True, node_color='lightblue')
 plt.show()
+
+# 保存生成的网络结构以便导入到model.py中
+with open(r'adaptive-bc\Graph\network_structure.pickle', 'wb') as f:
+    pickle.dump(G, f)
