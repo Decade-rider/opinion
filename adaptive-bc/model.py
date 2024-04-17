@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-18 00:36:13
+LastEditTime: 2024-04-18 01:18:19
 FilePath: \opinion\adaptive-bc\model.py
 Description: 
 
@@ -14,6 +14,7 @@ import numpy as np
 from collections import Counter
 # from numpy.random import RandomState, MT19937
 import random
+from numpy.random import SeedSequence
 
 import pickle
 import bz2
@@ -24,24 +25,26 @@ class Model:
         # print(f'Length of C: {len(kwparams["C"])}')
         # print(f'First few elements of C: {kwparams["C"][:5]}')
         # set random state for model instance to ensure repeatability
-        # self.seed_sequence = seed_sequence
-        # try:
-        #     self.spawn_key = seed_sequence.spawn_key[0]
-        # except:
-        #     self.spawn_key = None
-
-        # each instance gets its own RNG
-        # self.RNG = np.random.default_rng(seed_sequence)
-        # set state of random module
-        # random.seed(seed_sequence)
-        # self.random_state = seed_sequence # RandomState(MT19937(seed_sequence)) or random_state???
-        
-        self.seed_sequence = seed  # 存储种子
-        random.seed(seed)  # 使用整数种子
-        self.RNG = np.random.default_rng(seed=seed)  # 创建一个新的随机数生成器
         
         self.G = G  # 添加这行，接受外部网络
         self.opinions = opinions  # 添加这行，接受外部观点数据
+        
+        # 确保 seed 总是被处理为 SeedSequence
+        if isinstance(seed, SeedSequence):
+            self.seed_sequence = seed
+        else:
+            self.seed_sequence = SeedSequence(seed)
+
+        # 获取 spawn_key，确保其安全
+        self.spawn_key = (getattr(self.seed_sequence, 'spawn_key', [None]) or [None])[0]
+
+        # 初始化随机数生成器
+        self.RNG = np.random.default_rng(self.seed_sequence)
+        random.seed(self.seed_sequence.entropy)
+        
+        print("SeedSequence:", self.seed_sequence)
+        print("Spawn key:", self.spawn_key)
+
 
         # set model params
         self.trial = kwparams['trial']                      # trial ID (for saving model)
@@ -123,10 +126,19 @@ class Model:
         # self.initial_edges = edges.copy()
         # self.nodes = nodes
         
-        # 使用传入的 G 和 opinions 初始化网络和节点
-        self.nodes = [Node(id=n, initial_opinion=self.opinions[n], neighbors=list(self.G.adj[n]), confidence_bound=self.C, alpha=self.alphas[n]) for n in self.G.nodes()]
+        self.nodes = []
+        for n in self.G.nodes():
+            node_neighbors = list(self.G[n])
+            # 确保索引正确，如果节点ID从1开始，则需要调整alpha和C的索引为n-1
+            # 如果节点ID从0开始，直接使用n
+            node = Node(id=n, initial_opinion=self.opinions[n], neighbors=node_neighbors, confidence_bound=self.C[n], alpha=self.alphas[n])
+            self.nodes.append(node)
+        
         self.edges = list(self.G.edges())
         self.X = np.array([self.opinions[n] for n in self.G.nodes()])
+        self.initial_X = self.X.copy()  # 初始观点的深拷贝
+        self.edges = list(self.G.edges())
+        self.initial_edges = self.edges.copy()
 
     def opinion_to_emotion(self, opinion):
         # 情绪分类逻辑
