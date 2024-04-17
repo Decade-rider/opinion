@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-12 20:22:15
+LastEditTime: 2024-04-18 00:06:01
 FilePath: \opinion\adaptive-bc\model.py
 Description: 
 
@@ -19,7 +19,7 @@ import pickle
 import bz2
 
 class Model:
-    def __init__(self, seed_sequence, **kwparams) -> None:
+    def __init__(self,G,opinions,seed_sequence, **kwparams) -> None:
         # # Print the length and first few elements of C to debug
         # print(f'Length of C: {len(kwparams["C"])}')
         # print(f'First few elements of C: {kwparams["C"][:5]}')
@@ -35,6 +35,9 @@ class Model:
         # set state of random module
         random.seed(seed_sequence)
         # self.random_state = seed_sequence # RandomState(MT19937(seed_sequence)) or random_state???
+        
+        self.G = G  # 添加这行，接受外部网络
+        self.opinions = opinions  # 添加这行，接受外部观点数据
 
         # set model params
         self.trial = kwparams['trial']                      # trial ID (for saving model)
@@ -87,11 +90,12 @@ class Model:
         # opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
         # 0<=opinions<1/3,为负面情绪。1/3<=opinions<2/3,为中性情绪。2/3<=opinions<=1,为正面情绪
         # 0<=opinions<0.1,为极端负面情绪。0.9<=opinions<=1,为极端正面情绪
-        opinions = np.random.uniform(0,1,self.N)        
+        # opinions = np.random.uniform(0,1,self.N)        
         # generate G(N, p) random graph
         # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)
         # Generate a barabasi_albert scale-free network
-        G = nx.barabasi_albert_graph(self.N,2,seed=self.seed_sequence)
+        # G = nx.barabasi_albert_graph(self.N,2,seed=self.seed_sequence)
+    
 
         # random confidence bounds for each agent if providing list # 这部分可以不要
         # if type(self.C) is not list:
@@ -101,19 +105,24 @@ class Model:
         # print(f'Length of self.C after processing: {len(self.C)}')
         # print(f'First few elements of self.C: {self.C[:5]}')
 
-        nodes = []
-        for i in range(self.N):
-            node_neighbors = list(G[i])
-            node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
-            nodes.append(node)
+        # nodes = []
+        # for i in range(self.N):
+        #     node_neighbors = list(G[i])
+        #     node = Node(id=i, initial_opinion=opinions[i], neighbors=node_neighbors, confidence_bound=self.C[i],alpha=self.alphas[i])
+        #     nodes.append(node)
             
-        edges = [(u, v) for u, v in G.edges()]
+        # edges = [(u, v) for u, v in G.edges()]
 
-        self.X = opinions
-        self.initial_X = opinions
-        self.edges = edges.copy()
-        self.initial_edges = edges.copy()
-        self.nodes = nodes
+        # self.X = opinions
+        # self.initial_X = opinions
+        # self.edges = edges.copy()
+        # self.initial_edges = edges.copy()
+        # self.nodes = nodes
+        
+        # 使用传入的 G 和 opinions 初始化网络和节点
+        self.nodes = [Node(id=n, initial_opinion=self.opinions[n], neighbors=list(self.G.adj[n]), confidence_bound=self.C, alpha=self.alphas[n]) for n in self.G.nodes()]
+        self.edges = list(self.G.edges())
+        self.X = np.array([self.opinions[n] for n in self.G.nodes()])
 
     def opinion_to_emotion(self, opinion):
         # 情绪分类逻辑
