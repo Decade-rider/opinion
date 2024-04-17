@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-12 21:29:52
+LastEditTime: 2024-04-16 15:48:56
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
 
@@ -29,7 +29,7 @@ def plot_opinion_evolution(model, filename):
     plt.xlabel('Time')
     plt.ylabel('Opinion')
     plt.title('Opinion Evolution: Adaptive-BC')
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}.png')
+    plt.savefig(f'adaptive-bc/data/emotion/C/0.25_10/{filename}.png')
     plt.close()
 
 def plot_emotion_evolution(model, filename):
@@ -53,7 +53,7 @@ def plot_emotion_evolution(model, filename):
     plt.xlabel('时间步')
     plt.ylabel('数量')
     plt.legend()
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}_emotion_evolution.png')
+    plt.savefig(f'adaptive-bc/data/emotion/C/0.25_10/{filename}_emotion_evolution.png')
     plt.close()
 
 def plot_emotion_extreme_evolution(model, filename):
@@ -73,7 +73,7 @@ def plot_emotion_extreme_evolution(model, filename):
     plt.xlabel('时间步')
     plt.ylabel('数量')
     plt.legend()
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}_emotion_extreme_evolution.png')
+    plt.savefig(f'adaptive-bc/data/emotion/C/0.25_10/{filename}_emotion_extreme_evolution.png')
     plt.close()
         
     
@@ -91,7 +91,7 @@ def plot_emotion_extreme_total_evolution(model, filename):
     plt.xlabel('时间步')
     plt.ylabel('数量')
     plt.legend()
-    plt.savefig(f'adaptive-bc/data/emotion/{filename}_emotion_total_evolution.png')
+    plt.savefig(f'adaptive-bc/data/emotion/C/0.25_10/{filename}_emotion_total_evolution.png')
     plt.close()
     
 

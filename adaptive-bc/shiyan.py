@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-05 22:50:16
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-12 19:57:28
+LastEditTime: 2024-04-16 22:49:06
 FilePath: \opinion\adaptive-bc\shiyan.py
 Description: 
 
@@ -14,10 +14,23 @@ from run_control import multiple_experiments
 from visualize import load_model,plot_opinion_evolution,plot_emotion_evolution,plot_emotion_extreme_evolution,plot_emotion_extreme_total_evolution
 
 # 设置实验参数
-num_experiments = 2  # 设置要运行的实验次数
+num_experiments = 10  # 设置要运行的实验次数
 N = 100
-C = np.random.choice([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], N)
+# C = np.random.choice([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], N)
+# C = np.random.choice([0.1,0.1,0.1,0.1,0.1],N)
+# C = np.random.choice([0.2,0.2,0.2,0.2,0.2],N)
+C = np.random.choice([0.25,0.25,0.25,0.25,0.25],N)
+# C = np.random.choice([0.3,0.3,0.3,0.3,0.3],N)
+# C = np.random.choice([0.4,0.4,0.4,0.4,0.4],N)
+# C = np.random.choice([0.5,0.5,0.5,0.5,0.5],N)
+# C = np.random.choice([0.6,0.6,0.6,0.6,0.6],N)
+# C = np.random.choice([1,1,1,1,1],N)
 alphas_list = [0.1, 0.2, 0.3, 0.4, 0.5]
+# alphas_list = [0.1, 0.1, 0.1, 0.1, 0.1]
+# alphas_list = [0.2, 0.2, 0.2, 0.2, 0.2]
+# alphas_list = [0.3, 0.3, 0.3, 0.3, 0.3]
+# alphas_list = [0.4, 0.4, 0.4, 0.4, 0.4]
+# alphas_list = [0.5, 0.5, 0.5, 0.5, 0.5]
 beta = 1
 K = 5
 
@@ -26,7 +39,7 @@ multiple_experiments(num_experiments, N, C, beta, K, alphas_list)
 
 # 加载模型并绘制结果
 for trial in range(1, num_experiments + 1):
-    filename = f'adaptive-bc/data/emotion/baseline-ABC-K_{K}-C_1-beta_{beta}-trial_{trial}.pbz2'
+    filename = f'adaptive-bc/data/emotion/C/0.25_10/baseline-ABC-K_{K}-C_1-beta_{beta}-trial_{trial}.pbz2'
     model = load_model(filename)
     
     # 绘制每次实验观点的变化

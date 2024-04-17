@@ -20,7 +20,7 @@ def kwparams(N, C, beta, trial, K, alphas):
 def run_single_experiment(seed_sequence, model_params, filename):
     model = Model(seed_sequence, **model_params)
     model.run(test=False)  # 运行模型
-    model.save_model(filename=f'adaptive-bc/data/emotion/{filename}.pbz2')
+    model.save_model(filename=f'adaptive-bc/data/emotion/C/0.25_10/{filename}.pbz2')
 
 
 
