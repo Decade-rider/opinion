@@ -12,7 +12,7 @@ def load_network_and_opinions():
         G = pickle.load(f)
     
     # 加载初始观点数据
-    opinions_df = pd.read_excel('adaptive-bc/gdtj_qdr.xlsx', sheet_name='Sheet2', usecols=[0, 1], header=None)
+    opinions_df = pd.read_excel('adaptive-bc/gdtj_qdr.xlsx', sheet_name='Sheet2', usecols=[0, 2], header=None)
     opinions_df.columns = ['NodeID', 'Opinion']
     
     # 创建一个字典，将个体编号与观点对应起来
@@ -32,19 +32,20 @@ def kwparams(N, C, beta, trial, K, alphas):
         "C": C,
         "M": 1,
         "K": K,
-        "full_time_series": False
+        "full_time_series": True
     }
 
 def run_single_experiment(seed, model_params, filename, G, opinions):
     model = Model(G, opinions, seed, **model_params)  # 传递整数种子
     model.run(test=False)
-    model.save_model(filename=f'adaptive-bc/data/emotion/{filename}.pbz2')
+    model.save_model(filename=f'adaptive-bc/data/emotion/snownlp/固定seed，alpha和C都随机/{filename}.pbz2')
 
 
 def multiple_experiments(num_experiments, N, C, beta, K, alphas_list):
     G, opinions = load_network_and_opinions()  # 加载网络和观点数据
     for trial in range(1, num_experiments + 1):
         seed = 123456789  # 固定种子或使用 np.random.randint(0, 1000000) 生成随机种子
+        # seed = np.random.randint(0, 1000000)
         RNG = np.random.default_rng(seed=seed)  # 创建随机数生成器
         alphas = RNG.choice(alphas_list, N)  # 从范围中选择 alpha 值
         model_params = kwparams(N, C, beta, trial, K, alphas)
