@@ -1,3 +1,14 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-18 00:10:09
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-23 15:53:08
+FilePath: \opinion\adaptive-bc\run_moxingduibi.py
+Description: 
+用到的观点数据就是师兄的程序中用到的的gdtj的数据，sheet1是ztpd.mat生成的，sheet2则是个体的编号、初始观点以及各自的情绪值。
+采用了将初始情绪值作为个体的观点输入进行仿真，原因是二元观点的数据在模型可视化的结果出来很难分析，体现不了多次交互。
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import numpy as np
 from numpy.random import SeedSequence
 from model import Model

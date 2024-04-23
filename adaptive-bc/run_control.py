@@ -1,3 +1,13 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-05 20:21:14
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-23 14:36:39
+FilePath: \opinion\adaptive-bc\run_control.py
+Description: 
+
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import multiprocessing
 from model import Model
 import numpy as np

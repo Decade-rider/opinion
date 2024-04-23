@@ -5,7 +5,18 @@ LastEditors: Kamenrider 1161949421@qq.com
 LastEditTime: 2024-04-18 01:18:19
 FilePath: \opinion\adaptive-bc\model.py
 Description: 
+这段代码用于模拟和研究社交网络中的观点动态。该模型接受一个图形结构G和观点数据opinions作为输入，并通过各种参数来控制模拟的行为。具体功能包括：
 
+初始化模型：接受图形结构G、观点数据opinions、随机种子seed和其他参数（如最大步数、节点数量、连接概率等），并设置随机数生成器。
+初始化网络：根据给定的参数生成网络结构，并为每个节点分配观点和初始邻居。
+情绪分类：定义了将观点转换为情绪的函数。
+运行模型：根据设定的参数和规则，模拟观点的动态变化，包括观点更新和边的重连。同时记录相关数据，如观点时间序列、边的变化等。
+获取边和观点：提供了根据时间获取边和观点的函数。
+保存模型：将模拟结果保存到文件中。
+该模型的主要目标是研究观点动态如何受到网络结构和个体间交互规则的影响。
+
+现在模型是使用的真实的观点数据和网络结构，如果要进行模拟的话，可以将相应部分修改
+需要注意的是运行这个文件，其中的文件保存部分是备份的，暂时不用更改，不然可能会报错。
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 import networkx as nx
@@ -95,8 +106,6 @@ class Model:
         # opinions = self.RNG.random(self.N)
         # Generate initial opinions from a normal distribution
         # opinions = np.random.normal(loc=0.5, scale=0.1, size=self.N)
-        # 0<=opinions<1/3,为负面情绪。1/3<=opinions<2/3,为中性情绪。2/3<=opinions<=1,为正面情绪
-        # 0<=opinions<0.1,为极端负面情绪。0.9<=opinions<=1,为极端正面情绪
         # opinions = np.random.uniform(0,1,self.N)        
         # generate G(N, p) random graph
         # G = nx.fast_gnp_random_graph(n=self.N, p=self.p, seed=self.seed_sequence, directed=False)

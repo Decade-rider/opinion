@@ -5,7 +5,8 @@ LastEditors: Kamenrider 1161949421@qq.com
 LastEditTime: 2024-04-18 15:35:52
 FilePath: \opinion\adaptive-bc\shiyan.py
 Description: 
-
+    这个程序是进行多次实验的一键运行脚本，可以运行多次实验并保存实验结果和可视化结果。每次运行不同的实验记得除了更改实验参数外，还要更改所要用到的'run_'和visualize.py文件中的保存路径和文件加载路径。就是filename的路径。
+    如何加快模型的运行速度，可以增大K、alphas、C
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 # 假设 run.py 和 visualize.py 在同一目录中

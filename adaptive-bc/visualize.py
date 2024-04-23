@@ -5,7 +5,7 @@ LastEditors: Kamenrider 1161949421@qq.com
 LastEditTime: 2024-04-12 21:29:52
 FilePath: \opinion\adaptive-bc\visualize.py
 Description: 
-
+    该程序主是四个结果的可视化，分别是观点演变、情绪演变、两种极端情绪演变和极端情绪总数演变。
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 import pickle

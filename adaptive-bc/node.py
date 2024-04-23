@@ -5,7 +5,7 @@ LastEditors: Kamenrider 1161949421@qq.com
 LastEditTime: 2024-04-03 17:49:40
 FilePath: \opinion\adaptive-bc\node.py
 Description: 
-
+这个文件设置了节点的属性，由于我们现在使用的是经典的DW模型，beta=1，不用考虑每次交互后的节点重连概率，这个文件暂时不用管
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 import numpy as np

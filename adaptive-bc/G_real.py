@@ -1,3 +1,14 @@
+'''
+Author: Kamenrider 1161949421@qq.com
+Date: 2024-04-17 21:52:47
+LastEditors: Kamenrider 1161949421@qq.com
+LastEditTime: 2024-04-23 16:04:12
+FilePath: \opinion\adaptive-bc\G_real.py
+Description: 
+这个程序使用的数据就是师兄的程序中用到的的qx的数据，sheet1是ztpd.mat生成的用于生成网络结构，具体地说就是根据每次交互来创建，两个个存在一次
+交互即建立联系，为了体现交流是双向的建立的是无向图。
+Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
+'''
 import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt

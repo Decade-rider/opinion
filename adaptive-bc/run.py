@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-23 15:44:23
+LastEditTime: 2024-04-23 16:28:32
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 整个项目的运行我是在conda环境中创建了一个py3.11的版本，需要的库也就是numpy、matplotlib、pandas、networkx、pickle、pz2和openpyxl.由于环境中我还安装了一个ndlib的库，因此我如果导出成requirment.txt的话，安装的库可能非常多，所以我就不导出了，还有对于python的版本要求最低是py3.8。
@@ -27,8 +27,10 @@ C是置信度，是一个列表，每个节点的置信度是不同的，可以�
 max_step和tolearance分别是模型的最大迭代步长和观点聚合精度，都是终止条件。
 
 visualize.py主是四个结果的可视化，分别是观点演变、情绪演变、两种极端情绪演变和极端情绪总数演变。
+0<=opinion<1/3为负面情绪，1/3<=opinion<2/3为中性情绪，2/3<=opinion<1为正面情绪
+0<=opinion<=0.1为极端负面情绪，0.9<=opinion<=1为极端正面情绪
 
-
+node.py这个文件设置了节点的属性，由于我们现在使用的是经典的DW模型，beta=1，不用考虑每次交互后的节点重连概率，这个文件暂时不用管
 Copyright (c) 2024 by 1161949421@qq.com, All Rights Reserved. 
 '''
 import multiprocessing
