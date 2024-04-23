@@ -2,7 +2,7 @@
 Author: Kamenrider 1161949421@qq.com
 Date: 2024-04-02 10:25:06
 LastEditors: Kamenrider 1161949421@qq.com
-LastEditTime: 2024-04-23 15:36:51
+LastEditTime: 2024-04-23 15:44:23
 FilePath: \opinion\adaptive-bc\run.py
 Description: 
 整个项目的运行我是在conda环境中创建了一个py3.11的版本，需要的库也就是numpy、matplotlib、pandas、networkx、pickle、pz2和openpyxl.由于环境中我还安装了一个ndlib的库，因此我如果导出成requirment.txt的话，安装的库可能非常多，所以我就不导出了，还有对于python的版本要求最低是py3.8。
@@ -15,7 +15,7 @@ Description:
 需要调用哪个文件使用'import'调用即可。不过由于脚本扩展的逐步进行只需要分别根据使用模拟和真实数据来调用run_control.py和run_moxingduibi.py即可。
 
 整个项目的核心是model.py文件，包含了模型的定义和运行，其中的Model类是模型的核心类，包含了模型的定义和运行的方法。
-model中需要传入的参数有seed_sequence, N, C, beta, trial, K, alphas。
+model中需要由'run'文件传入的参数有seed_sequence, N, C, beta, trial, K, alphas、max_step、tolerance。
 其中seed_sequence是随机数种子，N是节点数，C是置信度，beta是模型参数，trial是实验次数，K是每次交互更新观点的节点对数，alphas是alpha值。还有一个full_time_series参数，用于控制是否保存完整的时间序列，意思是如果数据量太大的话，会导致内存溢出，因此将其设置位False会每250次作为一个时间步长进行记录。
 
 如果需要每次实验的结果都一样需要固定随机种子，否则每次实验的结果都不一样。
@@ -23,6 +23,8 @@ model中需要传入的参数有seed_sequence, N, C, beta, trial, K, alphas。
 C是置信度，是一个列表，每个节点的置信度是不同的，可以是随机的，也可以是固定的。alphas是alpha值，是一个列表，每个节点的alpha值是不同的，可以是随机的，也可以是固定的。一般C的取值都是[0,1],alpha的取值是[0,0.5]。为什么采用列表的形式赋值，是出于个体差异性的考虑，这样处理可以给每个个体赋予相同或不同的置信阈值和观点接受度，也是我做的一个拓展。
 
 还有beta值得特别说明一下，beta是模型的原作者对DW模型的一个拓展参数，当beta=1时，模型就是DW模型，当beta!=1时，模型就是拓展的模型。所以在实验中，我们可以设置beta=1来进行DW模型的实验，也可以设置beta!=1来进行拓展模型的实验。
+
+max_step和tolearance分别是模型的最大迭代步长和观点聚合精度，都是终止条件。
 
 visualize.py主是四个结果的可视化，分别是观点演变、情绪演变、两种极端情绪演变和极端情绪总数演变。
 
